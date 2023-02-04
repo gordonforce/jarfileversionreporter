@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "./gradlew clean build --gradle-version 7.6"
+                sh "./gradlew clean build"
             }
         }
     }
