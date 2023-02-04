@@ -1,8 +1,10 @@
 #!/usr/bin/env groovy
+
+def label = "java"
+def gradleVersion = "7.6"
+
 pipeline {
 
-    def label = "java"
-    def gradleVersion = "7.6"
 
     agent {
         label "${label}"
