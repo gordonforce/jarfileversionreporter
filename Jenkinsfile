@@ -7,7 +7,7 @@ pipeline {
 
 
     agent {
-        label "${label}"
+        label "java"
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "./gradlew clean build --gradle-version ${gradleVersion}"
+                sh "./gradlew clean build --gradle-version 7.6"
             }
         }
     }
