@@ -1,6 +1,6 @@
 pipeline {
 
-    agent "java"
+    agent label "java"
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
