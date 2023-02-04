@@ -1,14 +1,7 @@
-#!/usr/bin/env groovy
-
-def label = "java"
-def gradleVersion = "7.6"
-
 pipeline {
 
+    agent "java"
 
-    agent {
-        label "java"
-    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
         timeout(time: 1, unit: 'HOURS')
