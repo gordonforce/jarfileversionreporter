@@ -1,8 +1,9 @@
 #!/usr/bin/env groovy
-def label = "java"
-def gradleVersion = "7.6"
-
 pipeline {
+
+    def label = "java"
+    def gradleVersion = "7.6"
+
     agent {
         label "${label}"
     }
@@ -11,7 +12,7 @@ pipeline {
         timeout(time: 1, unit: 'HOURS')
     }
     triggers {
-        pollSCM('H/5 * * * *')
+        githubPush()
     }
     stages {
         stage('Checkout') {
