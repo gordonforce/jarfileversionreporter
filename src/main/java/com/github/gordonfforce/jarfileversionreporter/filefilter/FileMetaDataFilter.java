@@ -27,18 +27,6 @@ public interface FileMetaDataFilter {
       return "DefaultFileMetaDataFilter{}";
     }
 
-    @Override
-    public boolean equals(final Object o) {
-
-      return this == o || (o != null && getClass() == o.getClass());
-
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
   }
 
   static FileMetaDataFilter getInstance() {
