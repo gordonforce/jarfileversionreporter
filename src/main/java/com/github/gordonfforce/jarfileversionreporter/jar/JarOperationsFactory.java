@@ -37,6 +37,9 @@ public interface JarOperationsFactory {
     private static final Predicate<String> POM_PROPERTIES =
         Pattern.compile("META-INF/maven/.+/pom\\.properties").asPredicate();
 
+    private static final FileMatchingPredicatesFactory predicatesFactory =
+        FileMatchingPredicatesFactory.getInstance();
+
     private final FileMetaDataFilter fileFilter;
 
     DefaultJarOperationsImpl(final FileMetaDataFilter fileFilter) {
@@ -46,10 +49,7 @@ public interface JarOperationsFactory {
     @Override
     public Stream<Path> findAll(Path base) throws IOException {
 
-      return fileFilter.filter(
-          base,
-          (curPath, attributes) ->
-              attributes.isRegularFile() && curPath.toString().endsWith("jar"));
+      return fileFilter.filter(base, predicatesFactory.createJarFile());
 
     }
 
@@ -57,8 +57,9 @@ public interface JarOperationsFactory {
     public Stream<Path> findFileNameContaining(Path base, Collection<String> partialNames)
         throws IOException {
 
-      return findAll(base)
-          .filter(path -> partialNames.stream().anyMatch(path.toString()::contains));
+      final Predicate<Path> pathContains = predicatesFactory.createPathContains(partialNames);
+
+      return findAll(base).filter(pathContains);
 
     }
 
