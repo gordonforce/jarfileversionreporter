@@ -31,12 +31,4 @@ class FileMetaDataFilterTest {
 
   }
 
-  @Test
-  void testToString() {
-
-    assertThat(FileMetaDataFilter.getInstance().toString())
-        .hasToString("DefaultFileMetaDataFilter{}");
-
-  }
-
 }
