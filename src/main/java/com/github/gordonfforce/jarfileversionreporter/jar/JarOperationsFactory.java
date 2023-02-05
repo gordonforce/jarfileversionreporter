@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.jar.JarFile;
@@ -22,7 +23,11 @@ import org.slf4j.LoggerFactory;
 public interface JarOperationsFactory {
 
   default JarOperations create() {
-    return new DefaultJarOperationsImpl();
+    return new DefaultJarOperationsImpl(FileFilterFactory.getInstance().createFileMetaDataFilter());
+  }
+
+  default JarOperations create(final FileMetaDataFilter fileFilter) {
+    return new DefaultJarOperationsImpl(fileFilter);
   }
 
   class DefaultJarOperationsImpl implements JarOperations {
@@ -32,8 +37,11 @@ public interface JarOperationsFactory {
     private static final Predicate<String> POM_PROPERTIES =
         Pattern.compile("META-INF/maven/.+/pom\\.properties").asPredicate();
 
-    private static final FileMetaDataFilter fileFilter =
-        FileFilterFactory.getInstance().createFileMetaDataFilter();
+    private final FileMetaDataFilter fileFilter;
+
+    DefaultJarOperationsImpl(final FileMetaDataFilter fileFilter) {
+      this.fileFilter = fileFilter;
+    }
 
     @Override
     public Stream<Path> findAll(Path base) throws IOException {
@@ -118,6 +126,30 @@ public interface JarOperationsFactory {
 
       return results;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      DefaultJarOperationsImpl that = (DefaultJarOperationsImpl) o;
+      return Objects.equals(fileFilter, that.fileFilter);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(fileFilter);
+    }
+
+    @Override
+    public String toString() {
+      return "DefaultJarOperationsImpl{" +
+          "fileFilter=" + fileFilter +
+          '}';
     }
 
   }

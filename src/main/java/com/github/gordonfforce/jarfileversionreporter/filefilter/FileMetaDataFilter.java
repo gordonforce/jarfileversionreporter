@@ -20,4 +20,31 @@ public interface FileMetaDataFilter {
 
   }
 
+  class DefaultFileMetaDataFilter implements FileMetaDataFilter {
+
+    @Override
+    public String toString() {
+      return "DefaultFileMetaDataFilter{}";
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+
+      return this == o || (o != null && getClass() == o.getClass());
+
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+  }
+
+  static FileMetaDataFilter getInstance() {
+
+    return new DefaultFileMetaDataFilter();
+
+  }
+
 }

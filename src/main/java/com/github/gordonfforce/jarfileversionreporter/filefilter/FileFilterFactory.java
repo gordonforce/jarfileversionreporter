@@ -4,8 +4,7 @@ public interface FileFilterFactory {
 
   default FileMetaDataFilter createFileMetaDataFilter() {
 
-    return new FileMetaDataFilter() {
-    };
+    return FileMetaDataFilter.getInstance();
 
   }
 
