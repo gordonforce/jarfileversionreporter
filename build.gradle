@@ -1,9 +1,10 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
-group 'io.leftcoast'
-version '1.0-SNAPSHOT'
+group 'com.github.gordonforce'
+version '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -21,8 +22,21 @@ dependencies {
 test {
 
     testResultsDirName = "$buildDir/test-reports"
+
     useJUnitPlatform {
         includeEngines 'junit-jupiter'
     }
+
+    finalizedBy jacocoTestReport
+
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+jacocoTestReport {
+
+    dependsOn test
 
 }
