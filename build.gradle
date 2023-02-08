@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'nebula.source-jar' version '18.4.0'
 }
 
 group 'com.github.gordonforce'
@@ -9,6 +10,8 @@ version '1.0.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+
+sourceCompatibility = 11
 
 dependencies {
     implementation('org.slf4j:slf4j-api:2.0.4')
@@ -33,7 +36,9 @@ test {
 }
 
 jacoco {
+
     toolVersion = "0.8.8"
+
 }
 
 jacocoTestReport {
